@@ -25,7 +25,7 @@ File SDF di `hasil/` bisa dibuka di Avogadro, PyMOL, atau py3Dmol.
 ## Batasan
 
 - Energi MMFF94 adalah perkiraan fase gas dari medan gaya, bukan perhitungan kuantum dan bukan energi dalam larutan. Energi hanya dibandingkan antar konformer dari molekul yang sama.
-- Torsi cincin B kuersetin di model ini sekitar 45° dari sebidang. Perhitungan DFT B3LYP fase gas memberi sekitar 0° dan struktur kristal sekitar 5° ([sumber](https://pmc.ncbi.nlm.nih.gov/articles/PMC2885091)). Jadi angka torsi ini adalah batasan medan gaya, bukan nilai kuersetin yang sebenarnya.
+- Torsi cincin B kuersetin (C3–C2–C1′–C2′) di model ini sekitar 45–48° dari sebidang. Di literatur, perhitungan DFT B3LYP fase gas memberi minimum sebidang, 0° ([Aparicio, 2010](https://pmc.ncbi.nlm.nih.gov/articles/PMC2885091)); studi DFT/MP2 lain menemukan 48 konformer stabil, separuh sebidang dan separuh terpilin 40,9–44,3° ([Brovarets' dan Hovorun, 2020](https://doi.org/10.3390/app10031147)); struktur padatan hampir sebidang, sekitar 5–7° (Aparicio, 2010; data Rossi dkk., 1986 dalam [Marković dkk., 2013](https://www.rsc.org/suppdata/cp/c3/c3cp44605k/c3cp44605k.pdf)). Jadi sudut MMFF94 dibaca sebagai hasil medan gaya yang perlu dicek dengan metode kuantum, bukan nilai pasti kuersetin.
 - Medan gaya fase gas cenderung melebih-lebihkan ikatan hidrogen di dalam molekul, jadi urutan konformer asam klorogenat dalam air bisa berbeda.
 
 ## Perbaikan: asam tereftalat sempat terhitung 1 konformer

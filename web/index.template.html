@@ -59,7 +59,7 @@ button, select, summary, label[for], a[href], input[type="checkbox"] { cursor: p
 button:disabled { cursor: not-allowed; opacity: 0.5; }
 :focus-visible { outline: 2px solid var(--aksen); outline-offset: 3px; border-radius: 4px; }
 h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
-h1 { font: 500 clamp(3rem, 7.6vw, 5.6rem)/1.0 var(--f-serif); letter-spacing: -0.025em; }
+h1 { font: 500 clamp(2.4rem, 5vw, 3.8rem)/1.0 var(--f-serif); letter-spacing: -0.025em; }
 h2 { font: 400 clamp(2.2rem, 4.8vw, 3.4rem)/1.05 var(--f-serif); letter-spacing: -0.02em; }
 h3 { font: 500 clamp(1.65rem, 2.8vw, 2.35rem)/1.12 var(--f-serif); letter-spacing: -0.015em; }
 h4 { font: 600 1rem/1.4 var(--f-sans); }
@@ -505,7 +505,7 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
                 <div class="gulir-x"><table id="tabel-konformer"></table></div>
                 <div class="smiles"><code id="smiles"></code><button class="tombol-kecil" type="button" data-salin="smiles">Salin SMILES</button></div>
                 <p class="catatan" id="catatan-mol"></p>
-                <p class="catatan">Energi MMFF94 adalah perkiraan fase gas dari medan gaya, bukan perhitungan kuantum. Pembanding torsi kuersetin: DFT B3LYP fase gas sekitar 0° dan kristal sekitar 5° (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2885091">sumber</a>).</p>
+                <p class="catatan">Energi MMFF94 adalah perkiraan fase gas dari medan gaya, bukan perhitungan kuantum. Pembanding torsi cincin B (C3–C2–C1′–C2′) di literatur: perhitungan DFT B3LYP fase gas memberi minimum sebidang, 0° (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2885091">Aparicio, 2010</a>), sementara studi DFT/MP2 lain menemukan 48 konformer stabil, separuh sebidang dan separuh terpilin 40,9–44,3° (<a href="https://doi.org/10.3390/app10031147">Brovarets' dan Hovorun, 2020</a>). Struktur padatan hampir sebidang, sekitar 5–7° (Aparicio, 2010; data Rossi dkk., 1986 dalam <a href="https://www.rsc.org/suppdata/cp/c3/c3cp44605k/c3cp44605k.pdf">Marković dkk., 2013</a>). Jadi sudut MMFF94 dibaca sebagai hasil medan gaya yang perlu dicek dengan metode kuantum, bukan nilai pasti kuersetin.</p>
               </div>
             </details>
           </div>
@@ -968,7 +968,7 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
   var mol = DATA.molekul[0], idx = 0, gaya = 'bola', tampilH = true, putarKonf = false;
   var NAMA_PENDEK = { kuersetin: 'Kuersetin', asam_klorogenat: 'Asam klorogenat', asam_tereftalat: 'Asam tereftalat' };
   var CATATAN = {
-    kuersetin: function (m) { return 'Dari ' + m.jumlah_konvergen + ' percobaan awal tersisa ' + m.jumlah_unik + ' konformer unik, dengan selisih energi ' + fmt(m.konformer[m.konformer.length - 1].delta, 2) + ' kkal/mol (di bawah RT, ' + fmt(RT, 2) + ' kkal/mol). Torsi cincin B di model ini sekitar 45° dari sebidang, jauh dari nilai DFT dan kristal, jadi angka torsi adalah batasan medan gaya.'; },
+    kuersetin: function (m) { return 'Dari ' + m.jumlah_konvergen + ' percobaan awal tersisa ' + m.jumlah_unik + ' konformer unik, dengan selisih energi ' + fmt(m.konformer[m.konformer.length - 1].delta, 2) + ' kkal/mol (di bawah RT, ' + fmt(RT, 2) + ' kkal/mol). Di kedua konformer, cincin B terpilin sekitar 45–48° dari bidang inti kromon; pembandingnya di literatur ada di catatan bawah.'; },
     asam_klorogenat: function (m) { return 'Dari ' + m.jumlah_konvergen + ' percobaan awal tersisa ' + m.jumlah_unik + ' konformer unik; yang ditampilkan ' + m.konformer.length + ' berenergi terendah. Cincin sikloheksana dan ikatan ester membuat molekul ini fleksibel. Medan gaya fase gas cenderung melebih-lebihkan ikatan hidrogen di dalam molekul, jadi urutan dalam air bisa berbeda.'; },
     asam_tereftalat: function (m) { return 'Dari ' + m.jumlah_konvergen + ' percobaan awal tersisa ' + m.jumlah_unik + ' konformer unik. Kedua gugus karboksil tetap sebidang dengan cincin, jadi bedanya hanya arah C=O: berlawanan (trans) atau searah (cis), dengan selisih energi ' + fmt(m.konformer[m.konformer.length - 1].delta, 2) + ' kkal/mol. Versi awal skrip menggabungkan keduanya karena RDKit secara bawaan menganggap dua O karboksil setara; sudah diperbaiki. Ini molekul di skrip latihan pertama saya.'; }
   };
