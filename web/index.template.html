@@ -25,6 +25,7 @@
   Warna: satu aksen amber (warna kompleks flavonoid–AlCl₃ pada 420 nm) untuk tombol utama, status aktif, dan titik sampel. Biru hanya untuk data standar.
   Komposisi: proyek 1 = kepala lebar lalu angka 4/8 grafik; proyek 2 = adegan selebar halaman lalu teks dua kolom; proyek 3 = teks lengket 5/7 penampil.
   Gerak: molekul berputar dan siklus malam–siang Purivon menjelaskan isi; ada tombol jeda, dan diam saat prefers-reduced-motion.
+         Gerak gulir (kelas "gerak"): poin Keahlian/Pengalaman muncul berurutan, garis amber garis waktu mengikuti posisi baca.
 */
 :root, :root[data-theme="dark"] {
   --latar: #0E1113; --kartu: #151A1E; --kartu-2: #1C2227; --garis: #2A3238;
@@ -265,29 +266,45 @@ dl.desk dd { margin: 0; text-align: right; font-weight: 500; }
 .energi-x { margin: 12px 0 0 40px; font-size: 0.8rem; color: var(--teks-2); }
 
 /* Keahlian */
-.dua-teks { display: grid; gap: 8px 48px; }
-@media (min-width: 900px) { .dua-teks { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } .dua-teks .kepala { margin-bottom: 0; position: sticky; top: 96px; align-self: start; } }
-.daftar-keahlian > div { display: grid; gap: 6px 32px; padding: 20px 0 22px; border-top: 1px solid var(--garis); }
-@media (min-width: 640px) { .daftar-keahlian > div { grid-template-columns: minmax(0, 2fr) minmax(0, 5fr); } }
-.daftar-keahlian h3 { font: 600 1rem/1.5 var(--f-sans); letter-spacing: 0; }
-.daftar-keahlian ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-.daftar-keahlian small, .tiga-kolom small { display: block; font-size: 0.86rem; color: var(--teks-2); }
+.daftar-keahlian { display: grid; gap: 40px 48px; }
+@media (min-width: 820px) { .daftar-keahlian { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.daftar-keahlian > div { border-top: 1px solid var(--garis); padding-top: 16px; }
+.daftar-keahlian h3, .sisi-pengalaman h3 { font: 600 1rem/1.5 var(--f-sans); letter-spacing: 0; margin-bottom: 12px; }
+.daftar-keahlian .berpoin + h3 { margin-top: 32px; }
+.berpoin { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; font-size: 0.97rem; }
+.berpoin > li { position: relative; padding-left: 18px; }
+.berpoin > li::before { content: ""; position: absolute; left: 1px; top: calc(0.825em - 3px); width: 6px; height: 6px; border-radius: 50%; background: var(--aksen); }
+.berpoin small { display: block; margin-top: 2px; font-size: 0.86rem; color: var(--teks-2); }
+.sisi-pengalaman .berpoin > li::before { background: var(--teks-2); }
 
 /* Pengalaman */
-h3.grup { font: 400 1.6rem/1.2 var(--f-serif); margin: 0 0 8px; }
-h3.grup + .riwayat { margin-bottom: 72px; }
-.riwayat { margin: 0; padding: 0; list-style: none; }
-.riwayat > li { display: grid; gap: 4px 32px; padding: 20px 0 22px; border-top: 1px solid var(--garis); }
-@media (min-width: 900px) { .riwayat > li { grid-template-columns: 170px minmax(0, 5fr) minmax(0, 6fr); } }
-.riwayat .waktu { font-size: 0.92rem; color: var(--teks-2); padding-top: 1px; }
-.riwayat h4 { font-size: 1.05rem; }
+.tata-pengalaman { display: grid; gap: 72px 64px; }
+@media (min-width: 900px) { .tata-pengalaman { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); } .sisi-pengalaman { position: sticky; top: 96px; align-self: start; } }
+h3.grup { font: 400 1.6rem/1.2 var(--f-serif); margin: 0 0 28px; }
+.riwayat + h3.grup { margin-top: 72px; }
+.riwayat { position: relative; margin: 0; padding: 0 0 0 32px; list-style: none; }
+.riwayat > li { position: relative; padding-bottom: 36px; }
+.riwayat > li:last-child { padding-bottom: 0; }
+.riwayat > li::before { content: ""; position: absolute; z-index: 2; left: -32px; top: 7px; width: 11px; height: 11px; border-radius: 50%; background: var(--teks-2); box-shadow: 0 0 0 4px var(--latar); }
+.riwayat.lab > li::before { background: var(--aksen); }
+.riwayat > li:not(:last-child)::after { content: ""; position: absolute; left: -27px; top: 12px; width: 1px; height: 100%; background: var(--garis); }
+.riwayat .waktu { font-size: 0.92rem; color: var(--teks-2); }
+.riwayat h4 { font-size: 1.05rem; margin-top: 2px; }
 .riwayat .tempat { font-size: 0.94rem; color: var(--teks-2); margin-top: 2px; }
-.riwayat .uraian { font-size: 0.96rem; }
-.tiga-kolom { display: grid; gap: 40px 48px; }
-@media (min-width: 820px) { .tiga-kolom { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.tiga-kolom > div { border-top: 1px solid var(--teks-2); padding-top: 16px; }
-.tiga-kolom h3 { font: 600 1rem/1.5 var(--f-sans); letter-spacing: 0; margin-bottom: 12px; }
-.tiga-kolom ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; font-size: 0.97rem; }
+.riwayat .uraian { font-size: 0.96rem; margin-top: 8px; max-width: 64ch; }
+.sisi-pengalaman > div + div { margin-top: 40px; }
+.sisi-pengalaman > div { border-top: 1px solid var(--garis); padding-top: 16px; }
+
+/* Gerak gulir: hanya di layar, saat JS memasang kelas "gerak" di <html> (tidak dipasang kalau prefers-reduced-motion: reduce).
+   Tanpa kelas itu, dan saat dicetak, semua poin dan bulatan tampil seperti biasa. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .gerak .berpoin > li { opacity: 0; transform: translateY(10px); transition: opacity 480ms ease-out, transform 480ms ease-out; transition-delay: calc(var(--urut, 0) * 90ms); }
+  .gerak .tampil .berpoin > li { opacity: 1; transform: none; }
+  .gerak .riwayat::before { content: ""; position: absolute; z-index: 1; left: 4.5px; top: 12px; width: 2px; height: var(--maju, 0px); background: var(--aksen); }
+  .gerak .riwayat > li::before { background: var(--latar); box-shadow: inset 0 0 0 2px var(--teks-2), 0 0 0 4px var(--latar); transition: background-color 220ms, box-shadow 220ms; }
+  .gerak .riwayat.lab > li::before { box-shadow: inset 0 0 0 2px var(--aksen), 0 0 0 4px var(--latar); }
+  .gerak .riwayat > li.lewat::before { background: var(--aksen); box-shadow: inset 0 0 0 2px var(--aksen), 0 0 0 4px var(--latar); }
+}
 
 /* Kontak */
 .kontak p.ajakan { margin-top: 16px; color: var(--teks-2); font-size: 1.05rem; max-width: 52ch; }
@@ -516,91 +533,91 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
   </section>
 
   <section class="bagian" id="keahlian" aria-labelledby="judul-keahlian">
-    <div class="dua-teks">
-      <div class="kepala">
-        <h2 id="judul-keahlian">Keahlian</h2>
-        <p>Diambil dari pengalaman lab dan proyek di atas.</p>
+    <div class="kepala">
+      <h2 id="judul-keahlian">Keahlian</h2>
+      <p>Diambil dari pengalaman lab dan proyek di atas.</p>
+    </div>
+    <div class="daftar-keahlian">
+      <div>
+        <h3>Laboratorium</h3>
+        <ul class="berpoin">
+          <li>Spektrofotometri UV-Vis<small>Folin–Ciocalteu, AlCl₃, DPPH</small></li>
+          <li>Titrasi, volumetri, dan gravimetri</li>
+          <li>Preparasi sampel, pengenceran bertingkat, larutan standar</li>
+          <li>Good Laboratory Practice, K3, MSDS</li>
+        </ul>
       </div>
-      <div class="daftar-keahlian">
-        <div>
-          <h3>Laboratorium</h3>
-          <ul>
-            <li>Spektrofotometri UV-Vis<small>Folin–Ciocalteu, AlCl₃, DPPH</small></li>
-            <li>Titrasi, volumetri, dan gravimetri</li>
-            <li>Preparasi sampel, pengenceran bertingkat, larutan standar</li>
-            <li>Good Laboratory Practice, K3, MSDS</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Data dan pemrograman</h3>
-          <ul>
-            <li>Python<small>pandas, NumPy, matplotlib</small></li>
-            <li>Regresi kalibrasi dan analisis galat<small>R², RSD, LOD/LOQ</small></li>
-            <li>RDKit<small>sedang dipelajari</small></li>
-            <li>SPSS</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Sertifikat dan pelatihan</h3>
-          <ul>
-            <li>Introduction to HSE Engineering (K3)<small>Khalifa University, Februari 2026</small></li>
-            <li>Webinar Pengenalan SNI ISO/IEC 17025:2017<small>Labmania Indonesia, September 2024</small></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Bahasa</h3>
-          <ul><li>Indonesia</li><li>Inggris (menengah)</li></ul>
-        </div>
+      <div>
+        <h3>Data dan pemrograman</h3>
+        <ul class="berpoin">
+          <li>Python<small>pandas, NumPy, matplotlib</small></li>
+          <li>Regresi kalibrasi dan analisis galat<small>R², RSD, LOD/LOQ</small></li>
+          <li>RDKit<small>sedang dipelajari</small></li>
+          <li>SPSS</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Sertifikat dan pelatihan</h3>
+        <ul class="berpoin">
+          <li>Introduction to HSE Engineering (K3)<small>Khalifa University, Februari 2026</small></li>
+          <li>Webinar Pengenalan SNI ISO/IEC 17025:2017<small>Labmania Indonesia, September 2024</small></li>
+        </ul>
+        <h3>Bahasa</h3>
+        <ul class="berpoin"><li>Indonesia</li><li>Inggris (menengah)</li></ul>
       </div>
     </div>
   </section>
 
   <section class="bagian" id="pengalaman" aria-labelledby="judul-pengalaman">
     <div class="kepala"><h2 id="judul-pengalaman">Pengalaman</h2></div>
-    <h3 class="grup">Laboratorium</h3>
-    <ol class="riwayat">
-      <li>
-        <p class="waktu">Feb 2026 – Jun 2026</p>
-        <div><h4>Peneliti, Laboratorium Kimia Bahan Alam</h4><p class="tempat">Laboratorium Jurusan Pendidikan Kimia FKIP, Universitas Halu Oleo</p></div>
-        <p class="uraian">Penelitian tugas akhir: kadar total fenolik, flavonoid, dan aktivitas antioksidan air sadapan pisang merah. <a href="#penelitian">Lihat proyek</a>.</p>
-      </li>
-      <li>
-        <p class="waktu">Feb 2026 – Mar 2026</p>
-        <div><h4>Asisten Peneliti</h4><p class="tempat">Laboratorium Pengembangan Jurusan Pendidikan Kimia, Universitas Halu Oleo</p></div>
-        <p class="uraian">Pengujian sampel limbah cair pabrik kelapa sawit (POME): preparasi, pengenceran analitik, penyaringan, penyiapan reagen, interpretasi data instrumen, dan analisis galat.</p>
-      </li>
-      <li>
-        <p class="waktu">Okt 2025 – Des 2025</p>
-        <div><h4>Asisten Laboratorium</h4><p class="tempat">Laboratorium Pengembangan FKIP, Universitas Halu Oleo</p></div>
-        <p class="uraian">Praktikum stoikiometri dan reaksi redoks: mengawasi kepatuhan SOP dan K3, memandu pengukuran dengan neraca analitik dan alat volumetrik, membimbing perhitungan pereaksi pembatas, rendemen, dan analisis galat.</p>
-      </li>
-    </ol>
-    <h3 class="grup">Pengalaman lain</h3>
-    <ol class="riwayat">
-      <li><p class="waktu">Jun 2026 – Jul 2026</p><div><h4>Pre-Service Science Teacher (SEA-Teacher)</h4><p class="tempat">SEAMEO, Abaño Campus Laboratory School, University of Camarines Norte, Filipina</p></div></li>
-      <li><p class="waktu">Jun 2026</p><div><h4>Juri Academic &amp; Cultural Event</h4><p class="tempat">Abaño Campus Laboratory School, University of Camarines Norte, Filipina</p></div></li>
-      <li><p class="waktu">Apr 2026</p><div><h4>International Student Buddy</h4><p class="tempat">Universitas Halu Oleo, program SEA Teacher</p></div></li>
-      <li><p class="waktu">Sep 2025 – Feb 2026</p><div><h4>Copywriter (remote)</h4><p class="tempat">PT Winnicode Garuda Indonesia</p></div></li>
-      <li><p class="waktu">Jan 2025 – Apr 2025</p><div><h4>Project Assistant &amp; Business Development</h4><p class="tempat">PT Afbe Cahaya Kreatif</p></div></li>
-      <li><p class="waktu">Sep 2024 – Des 2024</p><div><h4>Asisten Mengajar, Kampus Mengajar Angkatan 8</h4><p class="tempat">SMP Negeri 24 Kendari</p></div></li>
-    </ol>
-    <div class="tiga-kolom">
+    <div class="tata-pengalaman">
       <div>
-        <h3>Pendidikan</h3>
-        <ul><li>S.Pd. Pendidikan Kimia, Universitas Halu Oleo<small>2022–2026 · IPK 3,54 / 4,00</small></li></ul>
+        <h3 class="grup">Laboratorium</h3>
+        <ol class="riwayat lab">
+          <li>
+            <p class="waktu">Feb 2026 – Jun 2026</p>
+            <div><h4>Peneliti, Laboratorium Kimia Bahan Alam</h4><p class="tempat">Laboratorium Jurusan Pendidikan Kimia FKIP, Universitas Halu Oleo</p></div>
+            <p class="uraian">Penelitian tugas akhir: kadar total fenolik, flavonoid, dan aktivitas antioksidan air sadapan pisang merah. <a href="#penelitian">Lihat proyek</a>.</p>
+          </li>
+          <li>
+            <p class="waktu">Feb 2026 – Mar 2026</p>
+            <div><h4>Asisten Peneliti</h4><p class="tempat">Laboratorium Pengembangan Jurusan Pendidikan Kimia, Universitas Halu Oleo</p></div>
+            <p class="uraian">Pengujian sampel limbah cair pabrik kelapa sawit (POME): preparasi, pengenceran analitik, penyaringan, penyiapan reagen, interpretasi data instrumen, dan analisis galat.</p>
+          </li>
+          <li>
+            <p class="waktu">Okt 2025 – Des 2025</p>
+            <div><h4>Asisten Laboratorium</h4><p class="tempat">Laboratorium Pengembangan FKIP, Universitas Halu Oleo</p></div>
+            <p class="uraian">Praktikum stoikiometri dan reaksi redoks: mengawasi kepatuhan SOP dan K3, memandu pengukuran dengan neraca analitik dan alat volumetrik, membimbing perhitungan pereaksi pembatas, rendemen, dan analisis galat.</p>
+          </li>
+        </ol>
+        <h3 class="grup">Pengalaman lain</h3>
+        <ol class="riwayat lain">
+          <li><p class="waktu">Jun 2026 – Jul 2026</p><div><h4>Pre-Service Science Teacher (SEA-Teacher)</h4><p class="tempat">SEAMEO, Abaño Campus Laboratory School, University of Camarines Norte, Filipina</p></div></li>
+          <li><p class="waktu">Jun 2026</p><div><h4>Juri Academic &amp; Cultural Event</h4><p class="tempat">Abaño Campus Laboratory School, University of Camarines Norte, Filipina</p></div></li>
+          <li><p class="waktu">Apr 2026</p><div><h4>International Student Buddy</h4><p class="tempat">Universitas Halu Oleo, program SEA Teacher</p></div></li>
+          <li><p class="waktu">Sep 2025 – Feb 2026</p><div><h4>Copywriter (remote)</h4><p class="tempat">PT Winnicode Garuda Indonesia</p></div></li>
+          <li><p class="waktu">Jan 2025 – Apr 2025</p><div><h4>Project Assistant &amp; Business Development</h4><p class="tempat">PT Afbe Cahaya Kreatif</p></div></li>
+          <li><p class="waktu">Sep 2024 – Des 2024</p><div><h4>Asisten Mengajar, Kampus Mengajar Angkatan 8</h4><p class="tempat">SMP Negeri 24 Kendari</p></div></li>
+        </ol>
       </div>
-      <div>
-        <h3>Pencapaian</h3>
-        <ul>
-          <li>Finalis 10 besar (peringkat 8), PENDIKAR Startup Innovation 2025<small>Karya: Purivon Technologies, Juni 2025</small></li>
-          <li>Medali Perak, Olimpiade Nusantara Soshum 2025<small>Lembaga Bina Prestasi Nusantara, Februari 2025</small></li>
-          <li>Awardee Beasiswa Cendekia BAZNAS Batch 6<small>BAZNAS RI, Agustus 2024</small></li>
-          <li>Juara 1 KSN Kimia tingkat Kabupaten<small>Juni 2021</small></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Organisasi</h3>
-        <ul><li>Kepala Departemen Komunikasi dan Informasi, HMJ Pendidikan Kimia UHO<small>2024–2025</small></li></ul>
+      <div class="sisi-pengalaman">
+        <div>
+          <h3>Pendidikan</h3>
+          <ul class="berpoin"><li>S.Pd. Pendidikan Kimia, Universitas Halu Oleo<small>2022–2026 · IPK 3,54 / 4,00</small></li></ul>
+        </div>
+        <div>
+          <h3>Pencapaian</h3>
+          <ul class="berpoin">
+            <li>Finalis 10 besar (peringkat 8), PENDIKAR Startup Innovation 2025<small>Karya: Purivon Technologies, Juni 2025</small></li>
+            <li>Medali Perak, Olimpiade Nusantara Soshum 2025<small>Lembaga Bina Prestasi Nusantara, Februari 2025</small></li>
+            <li>Awardee Beasiswa Cendekia BAZNAS Batch 6<small>BAZNAS RI, Agustus 2024</small></li>
+            <li>Juara 1 KSN Kimia tingkat Kabupaten<small>Juni 2021</small></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Organisasi</h3>
+          <ul class="berpoin"><li>Kepala Departemen Komunikasi dan Informasi, HMJ Pendidikan Kimia UHO<small>2024–2025</small></li></ul>
+        </div>
       </div>
     </div>
   </section>
@@ -615,9 +632,54 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
 <footer class="kaki">
   <div class="lebar">
     <span>Nabilah Nur Fitri</span>
-    <span>Data dan kode: <a href="__REPO__">github.com/cavinharry/portofolio-kimia</a>. Halaman dirapikan dengan bantuan Claude (Anthropic).</span>
+    <span>Data dan kode: <a href="__REPO__">github.com/cavinharry/portofolio-kimia</a></span>
   </div>
 </footer>
+<script>
+/* Gerak gulir untuk Keahlian dan Pengalaman. Berdiri sendiri, jadi tetap jalan walau skrip lain gagal. */
+(function () {
+  'use strict';
+  var mq = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)');
+  if (!mq || mq.matches || !('IntersectionObserver' in window)) return;
+  document.documentElement.classList.add('gerak');
+
+  // Poin muncul berurutan per kolom (jeda 90 ms lewat --urut), sekali saja.
+  var grup = Array.prototype.slice.call(document.querySelectorAll('.daftar-keahlian > div, .sisi-pengalaman > div'));
+  grup.forEach(function (g) {
+    Array.prototype.forEach.call(g.querySelectorAll('.berpoin > li'), function (li, i) { li.style.setProperty('--urut', i); });
+  });
+  var io = new IntersectionObserver(function (entri) {
+    entri.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('tampil');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  grup.forEach(function (g) { io.observe(g); });
+
+  // Garis amber mengikuti posisi baca (60% tinggi layar), dari bulatan pertama sampai bulatan terakhir.
+  var TENGAH = 12; // jarak pusat bulatan dari atas entri, sama dengan CSS
+  var daftar = Array.prototype.slice.call(document.querySelectorAll('.riwayat'));
+  var dijadwal = false;
+  function perbarui() {
+    dijadwal = false;
+    var baca = window.innerHeight * 0.6;
+    daftar.forEach(function (ol) {
+      var li = ol.children;
+      if (!li.length) return;
+      var jarak = baca - (ol.getBoundingClientRect().top + TENGAH);
+      var maks = li[li.length - 1].offsetTop;
+      ol.style.setProperty('--maju', Math.max(0, Math.min(jarak, maks)) + 'px');
+      for (var i = 0; i < li.length; i++) li[i].classList.toggle('lewat', jarak >= li[i].offsetTop);
+    });
+  }
+  function jadwalkan() { if (!dijadwal) { dijadwal = true; requestAnimationFrame(perbarui); } }
+  window.addEventListener('scroll', jadwalkan, { passive: true });
+  window.addEventListener('resize', jadwalkan);
+  window.addEventListener('load', jadwalkan); // huruf web bisa menggeser tata letak setelah skrip jalan
+  perbarui();
+})();
+</script>
 <script type="application/json" id="data-json">__DATA__</script>
 <script>
 (function () {
@@ -814,7 +876,7 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
 
   /* ---------- Grafik SVG ---------- */
   var NS = 'http://www.w3.org/2000/svg';
-  function el(nama, atr, induk) { var e = document.createElementNS(NS, nama); for (var k in atr) e.setAttribute(k, atr[k]); if (induk) induk.appendChild(e); return e; }
+  function el(nama, atr, induk) { var e = document.createElementNS(NS, nama); for (var k in atr) if (atr[k] !== undefined) e.setAttribute(k, atr[k]); if (induk) induk.appendChild(e); return e; }
   function langkahRapi(rentang, target) {
     var kasar = rentang / target, p = Math.pow(10, Math.floor(Math.log10(kasar))), pilihan = [1, 2, 2.5, 5, 10];
     for (var i = 0; i < pilihan.length; i++) if (pilihan[i] * p >= kasar - 1e-12) return pilihan[i] * p;
@@ -822,7 +884,57 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
   }
   function desimal(langkah) { for (var d = 0; d < 6; d++) { var v = langkah * Math.pow(10, d); if (Math.abs(v - Math.round(v)) < 1e-9) return d; } return 6; }
   function deretTik(awal, akhir, langkah) { var out = []; for (var v = Math.ceil(awal / langkah - 1e-9) * langkah; v <= akhir + 1e-9; v += langkah) out.push(Math.abs(v) < 1e-12 ? 0 : v); return out; }
-  function gambarGrafik(wadah, k) {
+  /* Transisi antar grafik: setiap elemen punya data-k yang sama di grafik lama dan baru.
+     Posisi lama dicatat sebelum menggambar ulang, lalu atribut digeser dengan requestAnimationFrame. */
+  var ATR_GESER = ['x1', 'y1', 'x2', 'y2', 'x', 'y', 'width', 'height'];
+  var LAMA_GESER = 700;
+  var mqKurangGerak = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function posisiElemen(e) {
+    var o = {};
+    ATR_GESER.forEach(function (a) { if (e.hasAttribute(a)) o[a] = parseFloat(e.getAttribute(a)); });
+    var t = /translate\(\s*([-\d.e]+)[\s,]+([-\d.e]+)\s*\)/.exec(e.getAttribute('transform') || '');
+    if (t) { o.tx = parseFloat(t[1]); o.ty = parseFloat(t[2]); }
+    return o;
+  }
+  function pasangPosisi(e, dari, ke, f) {
+    for (var a in ke) {
+      if (a === 'tx' || a === 'ty' || !(a in dari)) continue;
+      e.setAttribute(a, dari[a] + (ke[a] - dari[a]) * f);
+    }
+    if ('tx' in ke && 'tx' in dari) e.setAttribute('transform', 'translate(' + (dari.tx + (ke.tx - dari.tx) * f) + ' ' + (dari.ty + (ke.ty - dari.ty) * f) + ')');
+  }
+  function lunak(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; } // ease-in-out kubik
+  function geserGrafik(wadah, svg, lama, Hlama) {
+    var pasangan = [], baru = [];
+    Array.prototype.forEach.call(svg.querySelectorAll('[data-k]'), function (e) {
+      var dari = lama[e.getAttribute('data-k')];
+      if (dari) { var ke = posisiElemen(e); pasangan.push({ e: e, dari: dari, ke: ke }); pasangPosisi(e, dari, ke, 0); }
+      else { var dasar = parseFloat(getComputedStyle(e).opacity); baru.push({ e: e, dasar: isFinite(dasar) ? dasar : 1 }); e.style.opacity = 0; }
+    });
+    var W = parseFloat(svg.getAttribute('width')), Hbaru = parseFloat(svg.getAttribute('height'));
+    function tinggi(h) { svg.setAttribute('height', h); svg.setAttribute('viewBox', '0 0 ' + W + ' ' + h); }
+    tinggi(Math.max(Hlama, Hbaru));
+    var mulai = null;
+    function langkah(kini) {
+      if (mulai === null) mulai = kini;
+      var t = Math.min(1, (kini - mulai) / LAMA_GESER), f = lunak(t);
+      pasangan.forEach(function (p) { pasangPosisi(p.e, p.dari, p.ke, f); });
+      baru.forEach(function (b) { b.e.style.opacity = b.dasar * f; });
+      tinggi(Hlama + (Hbaru - Hlama) * f);
+      if (t < 1) { wadah._animasi = requestAnimationFrame(langkah); return; }
+      wadah._animasi = null;
+      baru.forEach(function (b) { b.e.style.opacity = ''; });
+      tinggi(Hbaru);
+    }
+    wadah._animasi = requestAnimationFrame(langkah);
+  }
+  function gambarGrafik(wadah, k, animasi) {
+    if (wadah._animasi) { cancelAnimationFrame(wadah._animasi); wadah._animasi = null; }
+    var svgLama = wadah.querySelector('svg'), lama = null, Hlama = 0;
+    if (animasi && svgLama && !(mqKurangGerak && mqKurangGerak.matches)) {
+      lama = {}; Hlama = parseFloat(svgLama.getAttribute('height'));
+      Array.prototype.forEach.call(svgLama.querySelectorAll('[data-k]'), function (e) { lama[e.getAttribute('data-k')] = posisiElemen(e); });
+    }
     var W = Math.max(260, wadah.clientWidth - 40);
     var m = { l: 54, r: 14, t: 28, b: 38 };
     var Hm = Math.round(Math.max(210, Math.min(300, W * 0.5)));
@@ -834,27 +946,28 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
     var Y = function (y) { return m.t + Hm - (y - ymin) / (ymaks - ymin) * Hm; };
     wadah.textContent = '';
     var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, role: 'group', 'aria-label': k.ariaLabel });
-    function teks(x, y, isi, anchor, kelas) { var t = el('text', { x: x, y: y, 'text-anchor': anchor || 'start', 'class': 'g-teks' + (kelas ? ' ' + kelas : '') }, svg); t.textContent = isi; return t; }
+    function teks(x, y, isi, anchor, kelas, kunci) { var t = el('text', { x: x, y: y, 'text-anchor': anchor || 'start', 'class': 'g-teks' + (kelas ? ' ' + kelas : ''), 'data-k': kunci }, svg); t.textContent = isi; return t; }
     var idKlip = 'klip-' + wadah.id;
     var cp = el('clipPath', { id: idKlip }, el('defs', {}, svg)); el('rect', { x: m.l, y: m.t, width: iw, height: Hm }, cp);
     var dy = desimal(ly);
-    deretTik(ymin, ymaks, ly).forEach(function (v) { el('line', { x1: m.l, x2: m.l + iw, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'g-sumbu' : 'g-grid' }, svg); teks(m.l - 8, Y(v) + 4, fmt(v, dy), 'end'); });
+    // Kunci kisi dan angka sumbu = urutan tik, jadi garis lama bergeser ke posisi tik baru.
+    deretTik(ymin, ymaks, ly).forEach(function (v, i) { el('line', { x1: m.l, x2: m.l + iw, y1: Y(v), y2: Y(v), 'class': v === 0 ? 'g-sumbu' : 'g-grid', 'data-k': 'kisi-y' + i }, svg); teks(m.l - 8, Y(v) + 4, fmt(v, dy), 'end', '', 'angka-y' + i); });
     var lx = langkahRapi(k.xmaks, 7), dx = desimal(lx);
-    deretTik(0, k.xmaks, lx).forEach(function (v) {
-      el('line', { x1: X(v), x2: X(v), y1: m.t, y2: m.t + Hm, 'class': 'g-grid' }, svg);
-      if (adaRes) el('line', { x1: X(v), x2: X(v), y1: m.t + Hm + celah, y2: bawah, 'class': 'g-grid' }, svg);
-      teks(X(v), bawah + 17, fmt(v, dx), 'middle');
+    deretTik(0, k.xmaks, lx).forEach(function (v, i) {
+      el('line', { x1: X(v), x2: X(v), y1: m.t, y2: m.t + Hm, 'class': 'g-grid', 'data-k': 'kisi-x' + i }, svg);
+      if (adaRes) el('line', { x1: X(v), x2: X(v), y1: m.t + Hm + celah, y2: bawah, 'class': 'g-grid', 'data-k': 'kisi-xr' + i }, svg);
+      teks(X(v), bawah + 17, fmt(v, dx), 'middle', '', 'angka-x' + i);
     });
-    el('line', { x1: m.l, x2: m.l, y1: m.t, y2: m.t + Hm, 'class': 'g-sumbu' }, svg);
-    el('line', { x1: m.l, x2: m.l + iw, y1: m.t + Hm, y2: m.t + Hm, 'class': 'g-sumbu' }, svg);
-    teks(4, 14, k.yLabel, 'start'); teks(m.l + iw, H - 4, k.xLabel, 'end');
+    el('line', { x1: m.l, x2: m.l, y1: m.t, y2: m.t + Hm, 'class': 'g-sumbu', 'data-k': 'sumbu-y' }, svg);
+    el('line', { x1: m.l, x2: m.l + iw, y1: m.t + Hm, y2: m.t + Hm, 'class': 'g-sumbu', 'data-k': 'sumbu-x' }, svg);
+    teks(4, 14, k.yLabel, 'start', '', 'judul-y'); teks(m.l + iw, H - 4, k.xLabel, 'end', '', 'judul-x');
     if (k.loq) {
-      el('rect', { x: m.l, y: m.t, width: X(Math.min(k.loq, k.xmaks)) - m.l, height: Hm, 'class': 'g-loq' }, svg);
-      if (k.loq < k.xmaks) { el('line', { x1: X(k.loq), x2: X(k.loq), y1: m.t, y2: m.t + Hm, 'class': 'g-bantu' }, svg); teks(X(k.loq) + 6, m.t + Hm - 8, 'LOQ ≈ ' + fmt(k.loq, 0) + ' ppm', 'start', 'kuat'); }
+      el('rect', { x: m.l, y: m.t, width: X(Math.min(k.loq, k.xmaks)) - m.l, height: Hm, 'class': 'g-loq', 'data-k': 'loq' }, svg);
+      if (k.loq < k.xmaks) { el('line', { x1: X(k.loq), x2: X(k.loq), y1: m.t, y2: m.t + Hm, 'class': 'g-bantu', 'data-k': 'loq-garis' }, svg); teks(X(k.loq) + 6, m.t + Hm - 8, 'LOQ ≈ ' + fmt(k.loq, 0) + ' ppm', 'start', 'kuat', 'loq-teks'); }
     }
-    (k.hgaris || []).forEach(function (g) { el('line', { x1: m.l, x2: m.l + iw, y1: Y(g.y), y2: Y(g.y), 'class': 'g-bantu' }, svg); teks(m.l + iw - 4, Y(g.y) - 6, g.teks, 'end', 'kuat'); });
-    (k.vgaris || []).forEach(function (g) { el('line', { x1: X(g.x), x2: X(g.x), y1: Y(g.y), y2: m.t + Hm, 'class': 'g-bantu' }, svg); teks(X(g.x) + 6, m.t + Hm - 8, g.teks, 'start', 'kuat'); });
-    if (k.regresi) { var gk = el('g', { 'clip-path': 'url(#' + idKlip + ')' }, svg); el('line', { x1: X(0), y1: Y(k.regresi.intersep), x2: X(k.xmaks), y2: Y(k.regresi.slope * k.xmaks + k.regresi.intersep), 'class': 'g-regresi' }, gk); }
+    (k.hgaris || []).forEach(function (g, i) { el('line', { x1: m.l, x2: m.l + iw, y1: Y(g.y), y2: Y(g.y), 'class': 'g-bantu', 'data-k': 'bantu-h' + i }, svg); teks(m.l + iw - 4, Y(g.y) - 6, g.teks, 'end', 'kuat', 'bantu-ht' + i); });
+    (k.vgaris || []).forEach(function (g, i) { el('line', { x1: X(g.x), x2: X(g.x), y1: Y(g.y), y2: m.t + Hm, 'class': 'g-bantu', 'data-k': 'bantu-v' + i }, svg); teks(X(g.x) + 6, m.t + Hm - 8, g.teks, 'start', 'kuat', 'bantu-vt' + i); });
+    if (k.regresi) { var gk = el('g', { 'clip-path': 'url(#' + idKlip + ')' }, svg); el('line', { x1: X(0), y1: Y(k.regresi.intersep), x2: X(k.xmaks), y2: Y(k.regresi.slope * k.xmaks + k.regresi.intersep), 'class': 'g-regresi', 'data-k': 'regresi' }, gk); }
     var tip = document.createElement('div'); tip.className = 'tip'; tip.hidden = true;
     function tampilTip(isi, cx, cy) {
       tip.textContent = isi; tip.hidden = false;
@@ -862,29 +975,31 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
       tip.style.left = Math.max(setengah, Math.min(wadah.clientWidth - setengah, 20 + cx)) + 'px';
       tip.style.top = (4 + cy) + 'px'; tip.style.transform = cy < 60 ? 'translate(-50%, 16px)' : '';
     }
-    function titik(p, cx, cy) {
-      var g = el('g', { 'class': 'titik-data', tabindex: '0', role: 'img', 'aria-label': p.label }, svg);
-      el('circle', { cx: cx, cy: cy, r: 10, 'class': 'g-fokus' }, g);
-      if (p.bentuk === 'wajik') el('path', { d: 'M' + cx + ' ' + (cy - 6.5) + 'L' + (cx + 6.5) + ' ' + cy + 'L' + cx + ' ' + (cy + 6.5) + 'L' + (cx - 6.5) + ' ' + cy + 'Z', 'class': p.kelas }, g);
-      else el('circle', { cx: cx, cy: cy, r: 5, 'class': p.kelas }, g);
-      el('circle', { cx: cx, cy: cy, r: 22, 'class': 'g-hit' }, g);
+    // Titik digambar di (0,0) lalu digeser dengan translate, supaya cukup satu atribut yang dianimasikan.
+    function titik(p, cx, cy, kunci) {
+      var g = el('g', { 'class': 'titik-data', tabindex: '0', role: 'img', 'aria-label': p.label, transform: 'translate(' + cx + ' ' + cy + ')', 'data-k': kunci }, svg);
+      el('circle', { cx: 0, cy: 0, r: 10, 'class': 'g-fokus' }, g);
+      if (p.bentuk === 'wajik') el('path', { d: 'M0 -6.5L6.5 0L0 6.5L-6.5 0Z', 'class': p.kelas }, g);
+      else el('circle', { cx: 0, cy: 0, r: 5, 'class': p.kelas }, g);
+      el('circle', { cx: 0, cy: 0, r: 22, 'class': 'g-hit' }, g);
       function tunjuk() { tampilTip(p.label, cx, cy); }
       function sembunyi() { tip.hidden = true; }
       g.addEventListener('pointerenter', tunjuk); g.addEventListener('focus', tunjuk);
       g.addEventListener('pointerleave', sembunyi); g.addEventListener('blur', sembunyi);
     }
-    k.titik.forEach(function (p) { titik(p, X(p.x), Y(p.y)); });
+    k.titik.forEach(function (p, i) { titik(p, X(p.x), Y(p.y), 'titik' + i); });
     if (adaRes) {
       var y0 = m.t + Hm + celah, rmaks = Math.max.apply(null, k.residual.map(function (p) { return Math.abs(p.y); })) * 1.45;
       var YR = function (r) { return y0 + Hr / 2 - r / rmaks * (Hr / 2); };
       var lr = langkahRapi(rmaks, 2); if (lr >= rmaks) lr = lr / 2;
       var dr = desimal(lr);
-      [-lr, 0, lr].forEach(function (v) { el('line', { x1: m.l, x2: m.l + iw, y1: YR(v), y2: YR(v), 'class': v === 0 ? 'g-sumbu' : 'g-grid' }, svg); teks(m.l - 8, YR(v) + 4, fmt(v, dr), 'end'); });
-      el('line', { x1: m.l, x2: m.l, y1: y0, y2: bawah, 'class': 'g-sumbu' }, svg);
-      teks(m.l + iw, y0 + 12, W < 520 ? 'residual' : 'residual (A terukur − A regresi)', 'end', 'kuat');
-      k.residual.forEach(function (p) { titik(p, X(p.x), YR(p.y)); });
+      [-lr, 0, lr].forEach(function (v, i) { el('line', { x1: m.l, x2: m.l + iw, y1: YR(v), y2: YR(v), 'class': v === 0 ? 'g-sumbu' : 'g-grid', 'data-k': 'kisi-r' + i }, svg); teks(m.l - 8, YR(v) + 4, fmt(v, dr), 'end', '', 'angka-r' + i); });
+      el('line', { x1: m.l, x2: m.l, y1: y0, y2: bawah, 'class': 'g-sumbu', 'data-k': 'sumbu-r' }, svg);
+      teks(m.l + iw, y0 + 12, W < 520 ? 'residual' : 'residual (A terukur − A regresi)', 'end', 'kuat', 'judul-r');
+      k.residual.forEach(function (p, i) { titik(p, X(p.x), YR(p.y), 'residu' + i); });
     }
     wadah.appendChild(svg); wadah.appendChild(tip);
+    if (lama) geserGrafik(wadah, svg, lama, Hlama);
   }
 
   /* ---------- Tampilan riset ---------- */
@@ -913,7 +1028,7 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
       '</tr></thead><tbody>' + baris.map(function (r) { return '<tr>' + r.map(function (c) { return '<td>' + c + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table>';
   }
   var ULANGAN = { simplo: 'Simplo', duplo: 'Duplo', triplo: 'Triplo' };
-  function tampilRiset() {
+  function tampilRiset(animasi) { // animasi hanya dari tombol uji, tidak saat ukuran berubah
     var wadah = $('#grafik-riset');
     $('#kuvet-baris').hidden = ujiAktif !== 'dpph';
     if (ujiAktif === 'dpph') {
@@ -926,7 +1041,7 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
         regresi: { slope: h.reg.slope, intersep: h.reg.intersep },
         hgaris: [{ y: 50, teks: '50% inhibisi' }], vgaris: [{ x: h.ic50, y: 50, teks: 'IC50 ≈ ' + fmt(h.ic50, 3) + '% v/v' }],
         titik: d.konsentrasi.map(function (c, i) { return { x: c, y: h.inhibisi[i], kelas: 'g-sampel', bentuk: 'wajik', label: fmt(c, 3) + '% v/v | A = ' + fmt(d.absorbansi[i], 2) + ' | inhibisi ' + fmt(h.inhibisi[i], 2) + '%' }; })
-      });
+      }, animasi);
       bacaanRiset([['Persamaan regresi', 'y = ' + fmt(h.reg.slope, 1) + '·x ' + fmtTanda(h.reg.intersep, 2)], ['R²', fmt(h.reg.r2, 4)], ['IC50 (linear)', fmt(h.ic50, 4), '% v/v'], ['Vitamin C 3 ppm', fmt(h.vitc, 2) + '%', 'kontrol positif']]);
       $('#keterangan-riset').textContent = KETERANGAN.dpph(h);
       $('#tabel-riset').innerHTML = tabel('Data DPPH (blanko A = ' + fmt(d.blanko, 3) + ')', ['Konsentrasi (% v/v)', 'Absorbansi', '% inhibisi', '% inhibisi di skripsi'],
@@ -943,7 +1058,7 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
       titik: h2.x.map(function (c, i) { return { x: c, y: h2.y[i], kelas: 'g-standar', bentuk: 'bulat', label: 'Standar ' + c + ' ppm | A = ' + fmt(h2.y[i], 3) + ' | residual ' + fmtTanda(h2.reg.residual[i], 4) }; })
         .concat(ds.sampel.map(function (sp, i) { return { x: h2.penuh.konsentrasi[i], y: sp.absorbansi, kelas: 'g-sampel', bentuk: 'wajik', label: 'Sampel ' + ULANGAN[sp.ulangan] + ' | A = ' + fmt(sp.absorbansi, 3) + ' | ' + fmt(h2.penuh.konsentrasi[i], 1) + ' ppm | ' + fmt(h2.penuh.kadar[i], 3) + ' ' + sat }; })),
       residual: h2.x.map(function (c, i) { return { x: c, y: h2.reg.residual[i], kelas: 'g-standar', bentuk: 'bulat', label: 'Residual ' + c + ' ppm | ' + fmtTanda(h2.reg.residual[i], 4) }; })
-    });
+    }, animasi);
     var c = h2.penuh.konsentrasi;
     bacaanRiset([['Persamaan regresi', 'A = ' + fmt(h2.reg.slope, 6) + '·C ' + fmtTanda(h2.reg.intersep, 4)], ['R²', fmt(h2.reg.r2, 4)], ['LOD / LOQ', fmt(h2.lod, 1) + ' / ' + fmt(h2.loq, 1), 'ppm'],
       ['Kadar, koefisien penuh', fmt(h2.penuh.stat.rerata, 3) + ' ± ' + fmt(h2.penuh.stat.sd, 3), sat + ' (skripsi ' + fmt(SK.nilai_skripsi[nama].rerata, 3) + ')']]);
@@ -957,7 +1072,7 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
     b.addEventListener('click', function () {
       ujiAktif = b.getAttribute('data-uji');
       $$('[data-uji]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      tampilRiset();
+      tampilRiset(true);
     });
   });
   tampilRiset();
