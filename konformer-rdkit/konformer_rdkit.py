@@ -90,6 +90,11 @@ def cari_konformer(smiles, jumlah_percobaan=500, ambang_rmsd=0.5, seed=42):
     # 3. Buang konformer duplikat. Banyak tebakan awal berakhir di lembah energi
     #    yang sama. Dibandingkan lewat RMSD atom berat (memperhitungkan simetri),
     #    jadi konformer yang hanya beda arah H pada gugus OH dianggap sama.
+    #    symmetrizeConjugatedTerminalGroups=False: bawaan RDKit menganggap dua O pada
+    #    gugus karboksil setara (benar untuk ion karboksilat, salah untuk asam COOH).
+    #    Kalau dibiarkan, rotamer C=O "cis" dan "trans" pada asam tereftalat punya
+    #    posisi atom berat yang sama persis (hanya O=C dan O-H bertukar tempat),
+    #    sehingga digabung jadi satu. Versi awal skrip ini mengalami hal itu.
     #    Untuk molekul achiral, bayangan cermin sebuah konformer secara fisik
     #    adalah konformer yang sama, jadi ikut dianggap duplikat. Itu sebabnya
     #    energinya persis sama. (Untuk molekul kiral, cermin adalah molekul lain.)
@@ -102,7 +107,8 @@ def cari_konformer(smiles, jumlah_percobaan=500, ambang_rmsd=0.5, seed=42):
         sama = False
         for _, cid_ref in unik:
             acuan = Chem.Mol(tanpa_h, False, cid_ref)
-            if any(rdMolAlign.GetBestRMS(Chem.Mol(c), acuan) < ambang_rmsd for c in pembanding):
+            if any(rdMolAlign.GetBestRMS(Chem.Mol(c), acuan, symmetrizeConjugatedTerminalGroups=False) < ambang_rmsd
+                   for c in pembanding):
                 sama = True
                 break
         if not sama:
