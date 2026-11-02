@@ -38,7 +38,7 @@ MOLEKUL = {
 }
 
 # Torsi yang ingin dilaporkan per molekul: empat indeks atom (urutan atom pada SMILES).
-# Kuersetin: C3-C2-C1'-C2' = seberapa miring cincin B terhadap inti kromon.
+# Kuersetin: C3-C2-C1'-C6' =seberapa miring cincin B terhadap inti kromon.
 TORSI = {"kuersetin": (2, 4, 5, 6)}
 
 

@@ -22,10 +22,55 @@ Asam tereftalat punya dua ikatan berputar (cincin–COOH). Kedua gugus karboksil
 
 File SDF di `hasil/` bisa dibuka di Avogadro, PyMOL, atau py3Dmol.
 
+## Verifikasi dengan GFN2-xTB
+
+### Metode
+
+Dua konformer kuersetin dari MMFF94 dioptimasi ulang dengan GFN2-xTB (xtb 6.7.1, opsi `--opt tight`, fase gas). Skrip pendukung ada di folder `xtb/`: `sdf_ke_xyz.py` mengubah SDF menjadi XYZ, dan `ukur_torsi.py` mengukur sudut cincin B dan menghitung selisih energi.
+
+### Hasil
+
+Sudut cincin B dilaporkan sebagai sudut dari sebidang:
+
+| Konformer | MMFF94 | GFN2-xTB |
+|---|---|---|
+| 1 | 44,7° | 1,9° |
+| 2 | 48,1° | 8,3° |
+
+| Metode | Selisih energi | Populasi pada 298 K (konformer 1 : 2) |
+|---|---|---|
+| MMFF94 | 0,15 kkal/mol | 56 : 44 |
+| GFN2-xTB | 0,97 kkal/mol | 84 : 16 |
+
+### Tafsiran
+
+Dengan metode yang menghitung elektron, kedua konformer hampir sebidang. Ini sesuai dengan DFT B3LYP fase gas (0°, Aparicio 2010) dan struktur padatan (5–7°). Jadi puntiran sekitar 45° dari MMFF94 kemungkinan besar efek medan gaya.
+
+### Batasan
+
+- GFN2-xTB adalah metode semi-empiris, tingkat ketelitiannya di bawah DFT.
+- Hanya dua konformer MMFF94 yang dioptimasi ulang, bukan pencarian konformer lengkap.
+- Langkah berikutnya: pencarian konformer dengan CREST, lalu verifikasi DFT.
+
+### Cara menjalankan
+
+Buat conda environment berisi xtb dan rdkit dari conda-forge, lalu jalankan di folder `xtb/k1` dan `xtb/k2`:
+
+```bash
+conda create -n xtb -c conda-forge xtb rdkit
+conda activate xtb
+cd xtb/k1
+xtb konformer1.xyz --gfn 2 --opt tight
+cd ../k2
+xtb konformer2.xyz --gfn 2 --opt tight
+```
+
+Setelah itu jalankan `python ukur_torsi.py` dari folder `xtb/`.
+
 ## Batasan
 
 - Energi MMFF94 adalah perkiraan fase gas dari medan gaya, bukan perhitungan kuantum dan bukan energi dalam larutan. Energi hanya dibandingkan antar konformer dari molekul yang sama.
-- Torsi cincin B kuersetin (C3–C2–C1′–C2′) di model ini sekitar 45–48° dari sebidang. Di literatur, perhitungan DFT B3LYP fase gas memberi minimum sebidang, 0° ([Aparicio, 2010](https://pmc.ncbi.nlm.nih.gov/articles/PMC2885091)); studi DFT/MP2 lain menemukan 48 konformer stabil, separuh sebidang dan separuh terpilin 40,9–44,3° ([Brovarets' dan Hovorun, 2020](https://doi.org/10.3390/app10031147)); struktur padatan hampir sebidang, sekitar 5–7° (Aparicio, 2010; data Rossi dkk., 1986 dalam [Marković dkk., 2013](https://www.rsc.org/suppdata/cp/c3/c3cp44605k/c3cp44605k.pdf)). Jadi sudut MMFF94 dibaca sebagai hasil medan gaya yang perlu dicek dengan metode kuantum, bukan nilai pasti kuersetin.
+- Torsi cincin B kuersetin yang diukur skrip adalah C3–C2–C1′–C6′ (atom 2, 4, 5, 6), bukan C3–C2–C1′–C2′. Sudut dilaporkan sebagai sudut dari sebidang supaya bisa dibandingkan dengan literatur yang memakai C2′. Di model ini sudutnya sekitar 45–48° dari sebidang. Di literatur, perhitungan DFT B3LYP fase gas memberi minimum sebidang, 0° ([Aparicio, 2010](https://pmc.ncbi.nlm.nih.gov/articles/PMC2885091)); studi DFT/MP2 lain menemukan 48 konformer stabil, separuh sebidang dan separuh terpilin 40,9–44,3° ([Brovarets' dan Hovorun, 2020](https://doi.org/10.3390/app10031147)); struktur padatan hampir sebidang, sekitar 5–7° (Aparicio, 2010; data Rossi dkk., 1986 dalam [Marković dkk., 2013](https://www.rsc.org/suppdata/cp/c3/c3cp44605k/c3cp44605k.pdf)). Jadi sudut MMFF94 dibaca sebagai hasil medan gaya yang perlu dicek dengan metode kuantum, bukan nilai pasti kuersetin. Verifikasi dengan GFN2-xTB memberi 1,9° dan 8,3° (lihat bagian Verifikasi dengan GFN2-xTB).
 - Medan gaya fase gas cenderung melebih-lebihkan ikatan hidrogen di dalam molekul, jadi urutan konformer asam klorogenat dalam air bisa berbeda.
 
 ## Perbaikan: asam tereftalat sempat terhitung 1 konformer

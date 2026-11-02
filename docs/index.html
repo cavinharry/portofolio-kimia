@@ -494,7 +494,7 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
           <div class="pilihan" id="pilih-mol" role="group" aria-label="Pilih molekul"></div>
           <dl class="desk" id="deskriptor"></dl>
           <dl class="meta">
-            <div><dt>Alat</dt><dd>Python, RDKit, Three.js</dd></div>
+            <div><dt>Alat</dt><dd>Python, RDKit, GFN2-xTB, Three.js</dd></div>
             <div><dt>Kode</dt><dd><a href="https://github.com/cavinharry/portofolio-kimia/tree/main/konformer-rdkit">konformer-rdkit di GitHub</a></dd></div>
           </dl>
         </div>
@@ -520,9 +520,17 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
                 </div>
                 <p class="energi-kosong" id="energi-kosong" hidden>Molekul ini hanya punya satu konformer unik, jadi tidak ada energi yang bisa dibandingkan.</p>
                 <div class="gulir-x"><table id="tabel-konformer"></table></div>
+                <div id="verifikasi-xtb" hidden>
+                  <div class="gulir-x"><table>
+                    <caption>Verifikasi GFN2-xTB (kuersetin)</caption>
+                    <thead><tr><th scope="col">Konformer</th><th scope="col">MMFF94 (° dari sebidang)</th><th scope="col">GFN2-xTB (° dari sebidang)</th></tr></thead>
+                    <tbody><tr><td>1</td><td>44,7</td><td>1,9</td></tr><tr><td>2</td><td>48,1</td><td>8,3</td></tr></tbody>
+                  </table></div>
+                  <p class="catatan">Selisih energi: MMFF94 0,15 kkal/mol, GFN2-xTB 0,97 kkal/mol (populasi 84:16 pada 298 K). GFN2-xTB metode semi-empiris; verifikasi DFT belum dilakukan.</p>
+                </div>
                 <div class="smiles"><code id="smiles"></code><button class="tombol-kecil" type="button" data-salin="smiles">Salin SMILES</button></div>
                 <p class="catatan" id="catatan-mol"></p>
-                <p class="catatan">Energi MMFF94 adalah perkiraan fase gas dari medan gaya, bukan perhitungan kuantum. Pembanding torsi cincin B (C3–C2–C1′–C2′) di literatur: perhitungan DFT B3LYP fase gas memberi minimum sebidang, 0° (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2885091">Aparicio, 2010</a>), sementara studi DFT/MP2 lain menemukan 48 konformer stabil, separuh sebidang dan separuh terpilin 40,9–44,3° (<a href="https://doi.org/10.3390/app10031147">Brovarets' dan Hovorun, 2020</a>). Struktur padatan hampir sebidang, sekitar 5–7° (Aparicio, 2010; data Rossi dkk., 1986 dalam <a href="https://www.rsc.org/suppdata/cp/c3/c3cp44605k/c3cp44605k.pdf">Marković dkk., 2013</a>). Jadi sudut MMFF94 dibaca sebagai hasil medan gaya yang perlu dicek dengan metode kuantum, bukan nilai pasti kuersetin.</p>
+                <p class="catatan">Energi MMFF94 adalah perkiraan fase gas dari medan gaya, bukan perhitungan kuantum.<span id="catatan-torsi" hidden> Pembanding torsi cincin B (C3–C2–C1′–C6′, dilaporkan sebagai sudut dari sebidang) di literatur: perhitungan DFT B3LYP fase gas memberi minimum sebidang, 0° (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2885091">Aparicio, 2010</a>), sementara studi DFT/MP2 lain menemukan 48 konformer stabil, separuh sebidang dan separuh terpilin 40,9–44,3° (<a href="https://doi.org/10.3390/app10031147">Brovarets' dan Hovorun, 2020</a>). Struktur padatan hampir sebidang, sekitar 5–7° (Aparicio, 2010; data Rossi dkk., 1986 dalam <a href="https://www.rsc.org/suppdata/cp/c3/c3cp44605k/c3cp44605k.pdf">Marković dkk., 2013</a>). Optimasi ulang dengan GFN2-xTB memberi 1,9° dan 8,3°, jadi puntiran sekitar 45° dari MMFF94 kemungkinan besar efek medan gaya; verifikasi DFT belum dilakukan.</span></p>
               </div>
             </details>
           </div>
@@ -553,6 +561,7 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
           <li>Python<small>pandas, NumPy, matplotlib</small></li>
           <li>Regresi kalibrasi dan analisis galat<small>R², RSD, LOD/LOQ</small></li>
           <li>RDKit<small>sedang dipelajari</small></li>
+          <li>Kimia komputasi semi-empiris<small>GFN2-xTB, Linux (WSL)</small></li>
           <li>SPSS</li>
         </ul>
       </div>
@@ -1083,15 +1092,17 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
   var mol = DATA.molekul[0], idx = 0, gaya = 'bola', tampilH = true, putarKonf = false;
   var NAMA_PENDEK = { kuersetin: 'Kuersetin', asam_klorogenat: 'Asam klorogenat', asam_tereftalat: 'Asam tereftalat' };
   var CATATAN = {
-    kuersetin: function (m) { return 'Dari ' + m.jumlah_konvergen + ' percobaan awal tersisa ' + m.jumlah_unik + ' konformer unik, dengan selisih energi ' + fmt(m.konformer[m.konformer.length - 1].delta, 2) + ' kkal/mol (di bawah RT, ' + fmt(RT, 2) + ' kkal/mol). Di kedua konformer, cincin B terpilin sekitar 45–48° dari bidang inti kromon; pembandingnya di literatur ada di catatan bawah.'; },
+    kuersetin: function (m) { return 'Dari ' + m.jumlah_konvergen + ' percobaan awal tersisa ' + m.jumlah_unik + ' konformer unik, dengan selisih energi ' + fmt(m.konformer[m.konformer.length - 1].delta, 2) + ' kkal/mol (di bawah RT, ' + fmt(RT, 2) + ' kkal/mol). Di model MMFF94 cincin B terpilin sekitar 45–48° dari bidang inti kromon. Setelah dioptimasi ulang dengan GFN2-xTB, kedua konformer hampir sebidang (1,9° dan 8,3°), sesuai literatur DFT dan data kristal.'; },
     asam_klorogenat: function (m) { return 'Dari ' + m.jumlah_konvergen + ' percobaan awal tersisa ' + m.jumlah_unik + ' konformer unik; yang ditampilkan ' + m.konformer.length + ' berenergi terendah. Cincin sikloheksana dan ikatan ester membuat molekul ini fleksibel. Medan gaya fase gas cenderung melebih-lebihkan ikatan hidrogen di dalam molekul, jadi urutan dalam air bisa berbeda.'; },
     asam_tereftalat: function (m) { return 'Dari ' + m.jumlah_konvergen + ' percobaan awal tersisa ' + m.jumlah_unik + ' konformer unik. Kedua gugus karboksil tetap sebidang dengan cincin, jadi bedanya hanya arah C=O: berlawanan (trans) atau searah (cis), dengan selisih energi ' + fmt(m.konformer[m.konformer.length - 1].delta, 2) + ' kkal/mol. Versi awal skrip menggabungkan keduanya karena RDKit secara bawaan menganggap dua O karboksil setara; sudah diperbaiki. Ini molekul di skrip latihan pertama saya.'; }
   };
+  // Sudut dari sebidang: min(|torsi|, 180 - |torsi|), supaya C6' bisa dibandingkan dengan literatur yang memakai C2'.
+  function dariBidang(t) { var a = Math.abs(t); return Math.min(a, 180 - a); }
   function tampilkan3D(reset) { if (window.TIGA) window.TIGA.konformer.muat(mol.konformer[idx].molblock, gaya, tampilH, reset); }
   function bacaan() {
     var k = mol.konformer[idx];
     var bagian = ['<b>Konformer ' + (idx + 1) + '</b> dari ' + mol.konformer.length + (mol.jumlah_unik > mol.konformer.length ? ' (' + mol.jumlah_unik + ' unik)' : ''), 'E <b>' + fmt(k.energi, 2) + '</b> kkal/mol', 'ΔE <b>' + fmt(k.delta, 2) + '</b>', 'populasi <b>' + fmt(k.populasi, 1) + '%</b>'];
-    if (typeof k.torsi === 'number') bagian.push('torsi B <b>' + fmt(k.torsi, 1) + '°</b>');
+    if (typeof k.torsi === 'number') bagian.push('torsi B <b>' + fmt(k.torsi, 1) + '°</b> (' + fmt(dariBidang(k.torsi), 1) + '° dari sebidang)');
     $('#bacaan').innerHTML = bagian.map(function (x) { return '<span class="utuh">' + x + '</span>'; }).join('<span class="sep">|</span>');
     $$('.titik').forEach(function (t, i) { t.setAttribute('aria-pressed', i === idx ? 'true' : 'false'); });
     $$('#tabel-konformer tbody tr').forEach(function (tr, i) { tr.className = i === idx ? 'terpilih' : ''; });
@@ -1103,6 +1114,8 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
     var dl = $('#deskriptor'); dl.textContent = '';
     baris.forEach(function (b) { var dt = document.createElement('dt'); dt.textContent = b[0]; var dd = document.createElement('dd'); dd.textContent = b[1]; dl.appendChild(dt); dl.appendChild(dd); });
     $('#smiles').textContent = mol.smiles;
+    $('#verifikasi-xtb').hidden = mol.id !== 'kuersetin';
+    $('#catatan-torsi').hidden = mol.id !== 'kuersetin';
     $('#catatan-mol').textContent = CATATAN[mol.id](mol);
   }
   // Angka pada rumus molekul ditulis sebagai subskrip (C₁₅H₁₀O₇).
@@ -1137,8 +1150,8 @@ noscript p { margin: 24px 0; padding: 12px 16px; border: 1px solid var(--garis);
   }
   function bangunTabel() {
     var t = $('#tabel-konformer'), punyaTorsi = typeof mol.konformer[0].torsi === 'number';
-    t.innerHTML = '<caption>' + mol.nama + '</caption><thead><tr><th scope="col">Konformer</th><th scope="col">E (kkal/mol)</th><th scope="col">ΔE</th><th scope="col">Populasi (%)</th>' + (punyaTorsi ? '<th scope="col">Torsi (°)</th>' : '') + '</tr></thead><tbody>' +
-      mol.konformer.map(function (k, i) { return '<tr><td>' + (i + 1) + '</td><td>' + fmt(k.energi, 3) + '</td><td>' + fmt(k.delta, 3) + '</td><td>' + fmt(k.populasi, 1) + '</td>' + (punyaTorsi ? '<td>' + fmt(k.torsi, 1) + '</td>' : '') + '</tr>'; }).join('') + '</tbody>';
+    t.innerHTML = '<caption>' + mol.nama + '</caption><thead><tr><th scope="col">Konformer</th><th scope="col">E (kkal/mol)</th><th scope="col">ΔE</th><th scope="col">Populasi (%)</th>' + (punyaTorsi ? '<th scope="col">Torsi C3–C2–C1′–C6′ (°)</th><th scope="col">Dari sebidang (°)</th>' : '') + '</tr></thead><tbody>' +
+      mol.konformer.map(function (k, i) { return '<tr><td>' + (i + 1) + '</td><td>' + fmt(k.energi, 3) + '</td><td>' + fmt(k.delta, 3) + '</td><td>' + fmt(k.populasi, 1) + '</td>' + (punyaTorsi ? '<td>' + fmt(k.torsi, 1) + '</td><td>' + fmt(dariBidang(k.torsi), 1) + '</td>' : '') + '</tr>'; }).join('') + '</tbody>';
   }
   (function bangunPilihan() {
     var w = $('#pilih-mol');

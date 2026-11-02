@@ -5,3 +5,11 @@ venv/
 .idea/
 .vscode/
 .DS_Store
+
+# File sementara xTB (xtbopt.xyz dan hasil.txt tetap ikut)
+konformer-rdkit/xtb/k*/xtbrestart
+konformer-rdkit/xtb/k*/charges
+konformer-rdkit/xtb/k*/wbo
+konformer-rdkit/xtb/k*/.xtboptok
+konformer-rdkit/xtb/k*/xtbtopo.mol
+konformer-rdkit/xtb/k*/xtbopt.log
